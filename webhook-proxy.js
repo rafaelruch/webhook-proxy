@@ -9,6 +9,13 @@ app.post('/webhook/:instance', async (req, res) => {
     const instance = req.params.instance;
     const data = req.body;
     
+    // Pega a API Key do header ou usa a padrão
+    const apiKey = req.headers['x-evolution-api-key'] || req.query.apikey || process.env.EVOLUTION_API_KEY;
+    
+    if (!apiKey) {
+      return res.status(401).json({ error: 'API Key not provided' });
+    }
+    
     // Se a mensagem tem attachments com URLs do MinIO
     if (data.attachments && Array.isArray(data.attachments)) {
       data.attachments = data.attachments.map(attachment => {
@@ -28,7 +35,7 @@ app.post('/webhook/:instance', async (req, res) => {
       data,
       {
         headers: {
-          'apikey': process.env.EVOLUTION_API_KEY,
+          'apikey': apiKey,
           'Content-Type': 'application/json'
         }
       }
