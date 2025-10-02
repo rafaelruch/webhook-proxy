@@ -1,0 +1,12 @@
+{
+  "name": "chatwoot-evolution-webhook",
+  "version": "1.0.0",
+  "main": "webhook-chatwoot.js",
+  "dependencies": {
+    "express": "^4.18.2",
+    "axios": "^1.6.0"
+  },
+  "scripts": {
+    "start": "node webhook-chatwoot.js"
+  }
+}
